@@ -4,7 +4,7 @@
   "description": "Test Unitaire Pure JS",
   "main": "index.js",
   "scripts": {
-    "test": "ng test"
+    "test": "jasmine"
   },
   "keywords": [
     "test-unitaire",
@@ -12,5 +12,8 @@
     "pure"
   ],
   "author": "Mahefa Abel",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^3.9.0"
+  }
 }
