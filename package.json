@@ -1,0 +1,16 @@
+{
+  "name": "tu-purejs",
+  "version": "1.0.0",
+  "description": "Test Unitaire Pure JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "ng test"
+  },
+  "keywords": [
+    "test-unitaire",
+    "js",
+    "pure"
+  ],
+  "author": "Mahefa Abel",
+  "license": "MIT"
+}
