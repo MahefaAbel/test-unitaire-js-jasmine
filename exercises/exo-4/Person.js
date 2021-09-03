@@ -90,12 +90,12 @@ export class Person {
         diff = date_diff(date_create(date), date_create(today));
         return diff.format('%y.%d');
     }
-    deleteColumn(&array, key) {
-        return array_walk(array, function (&value) use (key) {
+    deleteColumn(array, key) {
+        return array_walk(array, function (value) use (key) {
             unset(value[key]);
         });
     }
-    arraySortByColumn(&array, column, direction = Sort.ASC){
+    arraySortByColumn(array, column, direction = Sort.ASC){
         sortColumn = array();
         array.foreach((key, row) => {
             sortColumn[key] = row[column];
@@ -152,7 +152,7 @@ export class Person {
         return results;
     }
 
-    arrayPrepareData(&array){
+    arrayPrepareData(array){
         this.deleteColumn(array, Sort.AGE);
     }
 
