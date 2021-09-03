@@ -12,7 +12,12 @@ export class Person {
     public age: number;
     public dateOfBirth: number;
 
-    public constructor(firstname: string, familyName: string, dateOfBirth: number, gender: string){
+    public constructor(
+        firstname: string = null, 
+        familyName: string = null, 
+        dateOfBirth: number = null, 
+        gender: string = null
+    ){
         this.firstname = firstname;
         this.familyName = familyName;
         this.dateOfBirth = dateOfBirth;
