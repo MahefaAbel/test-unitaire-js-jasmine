@@ -237,7 +237,7 @@ class PersonTest extends TestCase
         this.assertTrue(count(array_diff_key(array, expected)) === 0);
 
         foreach (expected as key : value) {
-            if (is_array(value)) {
+            if (Array.isArray(value)) {
                 this.assertArraySimilar(value, array[key]);
             } else {
                 this.assertContains(value, array);

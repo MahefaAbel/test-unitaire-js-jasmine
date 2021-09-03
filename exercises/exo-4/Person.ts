@@ -1,39 +1,43 @@
 export class Person {
-    persons = [];
+    private persons: Person[] = [];
+    private currentPerson: Person;
 
-    firstname;
-    familyName;
-    sex;
-    dateOfBirth;
+    public firstname: string;
+    public familyName: string;
+    public gender: string;
+    public age: number;
+    public dateOfBirth: number;
 
-    set(firstname, lastname, birthDate, gender){
+    public constructor(firstname: string, familyName: string, dateOfBirth: number, gender: string){
         this.firstname = firstname;
-        this.lastname = lastname;
-        this.birthDate = birthDate;
+        this.familyName = familyName;
+        this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.age = null;
     }
 
-    add(firstname, lastname, birthDate, gender){
-        currentPerson = new Person();
-        currentPerson.set(firstname, lastname, birthDate, gender);
-        this.persons.push(currentPerson);
+    public add(firstname: string, familyName: string, dateOfBirth: number, gender: string): void{
+        this.currentPerson = new Person(firstname, familyName, dateOfBirth, gender);
+        this.persons.push(this.currentPerson);
     }
 
-    get(){
-        calculatedAge = this.getAgeFromDate(this.birthDate);
-        return {
-            [Sort.FIRSTNAME] : this.firstname, 
-            [Sort.LASTNAME] : this.lastname, 
-            [Sort.BIRTHDATE] : this.birthDate, 
-            [Sort.AGE] : calculatedAge, 
-            [Sort.GENDER] : this.gender
-        };
+    public get(): Person{
+        this.age = this.getAgeFromDate(this.dateOfBirth);
+
+        // return {
+        //     [Sort.FIRSTNAME] : this.firstname, 
+        //     [Sort.LASTNAME] : this.familyName, 
+        //     [Sort.dateOfBirth] : this.dateOfBirth, 
+        //     [Sort.AGE] : calculatedAge, 
+        //     [Sort.GENDER] : this.gender
+        // };
+
+        return this;
     }
 
-    listAll(prepareData = true){
-        results = [];
-        this.persons.foreach(person => results.push(person.get()));
+    public listAll(prepareData = true): Person[]{
+        const results: Person[] = [];
+        this.persons.forEach(person => results.push(person.get()));
 
         if(prepareData){
             this.arrayPrepareData(results);
@@ -42,24 +46,24 @@ export class Person {
         return results;
     }
 
-    listUnderAge(age){
-        results = this.listAll(false);
+    public listUnderAge(age): Person[]{
+        let results = this.listAll(false);
         results = this.arraySearchForSubKeyValue(results, Sort.AGE, age, Operator.LOWER);
         this.arrayPrepareData(results);
 
         return results;
     }
 
-    sortedList(sort, direction){
-        results = this.listAll(false);
+    public sortedList(sort, direction): Person[]{
+        const results: Person[] = this.listAll(false);
         this.arraySortByColumn(results, sort, direction);
         this.arrayPrepareData(results);
 
         return results;
     }
 
-    customSearch(searchCriteria){
-        results = this.listAll(false);
+    public customSearch(searchCriteria): Person[]{
+        let results: Person[] = this.listAll(false);
         if(searchCriteria.firstname != null){
             results = this.arraySearchForSubKeyValue(results, Sort.FIRSTNAME, searchCriteria.firstname, Operator.STARTWITH);
         }
@@ -85,28 +89,28 @@ export class Person {
         return results;
     }
 
-    getAgeFromDate(date){
-        today = date("Y-m-d");
-        diff = date_diff(date_create(date), date_create(today));
+    public getAgeFromDate(date): string{
+        const today = date("Y-m-d");
+        const diff = date_diff(date_create(date), date_create(today));
         return diff.format('%y.%d');
     }
-    deleteColumn(array, key) {
+    public deleteColumn(array, key): void {
         return array_walk(array, function (value) use (key) {
             unset(value[key]);
         });
     }
-    arraySortByColumn(array, column, direction = Sort.ASC){
-        sortColumn = array();
+    public arraySortByColumn(array, column, direction = Sort.ASC): void{
+        const sortColumn = array();
         array.foreach((key, row) => {
             sortColumn[key] = row[column];
         });
         array_multisort(sortColumn, direction, array);
     }
 
-    arraySearchForSubKeyValue(array, key, value, operator){
-        results = [];
+    public arraySearchForSubKeyValue(array, key, value, operator): Person[]{
+        let results: Person[] = [];
     
-        if (is_array(array)) {
+        if (Array.isArray(array)) {
             if(isset(array[key])){
                 switch (operator){
                     case Operator.LOWER:
@@ -144,15 +148,15 @@ export class Person {
                 }
             }
     
-            foreach (array as subarray) {
+            array.forEach(subarray => {
                 results = array_merge(results, this.arraySearchForSubKeyValue(subarray, key, value, operator));
-            }
+            });
         }
     
         return results;
     }
 
-    arrayPrepareData(array){
+    public arrayPrepareData(array){
         this.deleteColumn(array, Sort.AGE);
     }
 
