@@ -1,11 +1,5 @@
-export class CustomCriteria {
-    // familyName;
-    // firstname;
-    // age;
-    // ageOperator;
-    // sortField;
-    // sortDirection;
 
+export class CustomCriteria {
     public firstname;
     public lastname;
     public gender;
@@ -14,7 +8,7 @@ export class CustomCriteria {
     public sort;
     public direction;
 
-    __construct(firstname, lastname, gender, age, ageOperator, sort, direction){
+    public constructor(firstname, lastname, gender, age, ageOperator, sort, direction){
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
@@ -26,29 +20,30 @@ export class CustomCriteria {
 
 }
 
-abstract class Sort{
-    const LASTNAME = 'lastname';
-    const FIRSTNAME = 'firstname';
-    const GENDER = 'gender';
-    const AGE = 'age';
-    const BIRTHDATE = 'birthDate';
+export enum Sort{
+    LASTNAME = 'lastname',
+    FIRSTNAME = 'firstname',
+    GENDER = 'gender',
+    AGE = 'age',
+    BIRTHDATE = 'birthDate',
+    ASC = 'ASC'
 }
 
-abstract class Direction{
-    const ASC = SORT_ASC;
-    const DESC = SORT_DESC;
+export enum Direction{
+    ASC = "SORT_ASC",
+    DESC = "SORT_DESC",
 }
 
-abstract class Gender{
-    const MALE = 'H';
-    const FEMALE = 'F';
+export enum Gender{
+    MALE = 'H',
+    FEMALE = 'F',
 }
 
-abstract class Operator{
-    const LOWER = '<';
-    const LOWEROREQUAL = '<=';
-    const GREATEST = '>';
-    const GREATESTOREQUAL = '>=';
-    const EQUALS = '=';
-    const STARTWITH = 'startWith';
+export enum Operator{
+    LOWER = '<',
+    LOWEROREQUAL = '<=',
+    GREATEST = '>',
+    GREATESTOREQUAL = '>=',
+    EQUALS = '=',
+    STARTWITH = 'startWith',
 }

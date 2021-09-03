@@ -1,3 +1,7 @@
+import { DateUtils } from "../../libs/DateUtils";
+import { Operator, Sort } from "./CustomCriteria";
+import { array_multisort } from "../../libs/Array";
+
 export class Person {
     private persons: Person[] = [];
     private currentPerson: Person;
@@ -47,7 +51,7 @@ export class Person {
     }
 
     public listUnderAge(age): Person[]{
-        let results = this.listAll(false);
+        let results: Person[] = this.listAll(false);
         results = this.arraySearchForSubKeyValue(results, Sort.AGE, age, Operator.LOWER);
         this.arrayPrepareData(results);
 
@@ -89,15 +93,14 @@ export class Person {
         return results;
     }
 
-    public getAgeFromDate(date): string{
-        const today = date("Y-m-d");
-        const diff = date_diff(date_create(date), date_create(today));
-        return diff.format('%y.%d');
+    public getAgeFromDate(date): number{
+        const today = new Date("Y-m-d");
+        const diff = DateUtils.dateDiff(new Date(date), new Date(today));
+        // return diff.format('%y.%d');
+        return diff;
     }
     public deleteColumn(array, key): void {
-        return array_walk(array, function (value) use (key) {
-            unset(value[key]);
-        });
+        return array.map(value => delete value[key] );
     }
     public arraySortByColumn(array, column, direction = Sort.ASC): void{
         const sortColumn = array();
@@ -107,40 +110,40 @@ export class Person {
         array_multisort(sortColumn, direction, array);
     }
 
-    public arraySearchForSubKeyValue(array, key, value, operator): Person[]{
+    public arraySearchForSubKeyValue(array: Person[], key: string, value: any, operator: string): Person[]{
         let results: Person[] = [];
     
         if (Array.isArray(array)) {
-            if(isset(array[key])){
+            if(array[key] !== "undefined"){
                 switch (operator){
                     case Operator.LOWER:
                         if(array[key] < value){
-                            results[] = array;
+                            results.concat(array);
                         }
                         break;
                     case Operator.LOWEROREQUAL:
                         if(array[key] <= value){
-                            results[] = array;
+                            results.concat(array);
                         }
                         break;
                     case Operator.GREATEST:
                         if(array[key] > value){
-                            results[] = array;
+                            results.concat(array);
                         }
                         break;
                     case Operator.GREATESTOREQUAL:
                         if(array[key] >= value){
-                            results[] = array;
+                            results.concat(array);
                         }
                         break;
                     case Operator.EQUALS:
                         if(array[key] == value){
-                            results[] = array;
+                            results.concat(array);
                         }
                         break;
                     case Operator.STARTWITH:
-                        if(strpos(strtolower(array[key]), strtolower(value))===0){
-                            results[] = array;
+                        if(array[key].strtolower().indexOf(value.strtolower()) === 0){
+                            results.concat(array);
                         }
                         break;
                     default:
@@ -148,8 +151,8 @@ export class Person {
                 }
             }
     
-            array.forEach(subarray => {
-                results = array_merge(results, this.arraySearchForSubKeyValue(subarray, key, value, operator));
+            array.forEach((subarray: Person) => {
+                // results = results.concat(this.arraySearchForSubKeyValue(subarray, key, value, operator));
             });
         }
     
