@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/app.js",
-    "build": "npx webpack --config=webpack.config.js",
+    "build": "npx webpack --config=webpack.config.js --mode=development",
+    "build:prod": "npx webpack --config=webpack.config.js --mode=production",
     "test:js": "jasmine",
-    "test": "jasmine-ts --config=jasmine.json",
+    "test": "jasmine-ts --config=spec/support/jasmine.json",
     "test:init": "node_modules/.bin/jasmine-ts init"
   },
   "keywords": [

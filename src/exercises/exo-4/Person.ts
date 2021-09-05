@@ -55,7 +55,7 @@ export class Person {
         return results;
     }
 
-    public listUnderAge(age): Person[]{
+    public listUnderAge(age): Person[] {
         let results: Person[] = this.listAll(false);
         results = this.arraySearchForSubKeyValue(results, Sort.AGE, age, Operator.LOWER);
         this.arrayPrepareData(results);
@@ -65,6 +65,7 @@ export class Person {
 
     public sortedList(sort, direction): Person[]{
         const results: Person[] = this.listAll(false);
+        console.log("Person::sortedList()>results: ", results);
         this.arraySortByColumn(results, sort, direction);
         this.arrayPrepareData(results);
 
@@ -108,7 +109,7 @@ export class Person {
         return array.map(value => delete value[key] );
     }
     public arraySortByColumn(array, column, direction = Sort.ASC): void{
-        const sortColumn = array();
+        const sortColumn = [];
         array.foreach((key, row) => {
             sortColumn[key] = row[column];
         });
@@ -147,9 +148,10 @@ export class Person {
                         }
                         break;
                     case Operator.STARTWITH:
-                        if(array[key].strtolower().indexOf(value.strtolower()) === 0){
-                            results.concat(array);
-                        }
+                        console.log("arraySearchForSubKeyValue::Operator.STARTWITH, array:", array);
+                        // if(array[key].strtolower().indexOf(value.strtolower()) === 0){
+                        //     results.concat(array);
+                        // }
                         break;
                     default:
                         break;

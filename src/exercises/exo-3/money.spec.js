@@ -1,4 +1,3 @@
-
 const Money = require("./money");
 
 describe("Money", () => {
@@ -10,6 +9,7 @@ describe("Money", () => {
         const moneyA = new Money("MGA", 100);
         const moneyB = new Money("MGA", 150);
         moneyA.add(moneyB);
+        console.log("devrait additionner de l'argent, moneyA", moneyA);
         expect(moneyA.montant).toEqual(250);
     });
     it("devrait lever une exception", () => {

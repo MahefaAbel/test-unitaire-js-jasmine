@@ -13,7 +13,7 @@ class Money {
             if(money.currency != this.currency){
                 throw new Error("Money currency are not the same");
             }
-            this.amount += money.amount;
+            this.montant += money.montant;
         }
     }
 }

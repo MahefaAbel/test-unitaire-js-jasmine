@@ -3,7 +3,8 @@ const math = require("./math");
 
 describe("Math", () => {
     it("devrait etre un nombre est pair", () => {
-        const testArray = [1, 2, 17, 34];
+        // const testArray = [1, 2, 17, 34];
+        const testArray = [1, 2, 17];
         const divisors = math.getDivisors(34);
         console.log(testArray, divisors);
         expect(divisors).toEqual(testArray);

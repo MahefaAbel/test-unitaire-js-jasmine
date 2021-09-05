@@ -1,12 +1,12 @@
 {
-  "spec_dir": "exercises",
+  "spec_dir": "src",
   "spec_files": [
     "**/*[sS]pec.?(m)js",
-    "**/*[sS]pec.?ts"
+    "**/*[sS]pec.ts"
   ],
   "helpers": [
     "helpers/**/*.?(m)js",
-    "helpers/**/*.?ts"
+    "helpers/**/*.ts"
   ],
   "stopSpecOnExpectationFailure": false,
   "random": true,
@@ -17,5 +17,5 @@
         "displayStacktrace": "all"
       }
     }
-  ],
+  ]
 }
