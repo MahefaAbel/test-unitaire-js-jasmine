@@ -18,15 +18,31 @@ export const assertArraySimilar = (expected: Array<any>,  array: Array<any>) => 
 export function addMatcher_toEqualPersonValue(){
     jasmine.addMatchers({
       toEqualPersonValue: () => {
+        const checkIfObjectPerson = object => object.hasOwnProperty("firstname") && object.hasOwnProperty("familyName");
+        const checkArray = (array1, array2) => true;
         return {
-          compare: function(actualPerson: Person, exceptPerson: {[Sort.FIRSTNAME], [Sort.LASTNAME], [Sort.AGE], [Sort.BIRTHDATE], [Sort.GENDER]}) {
-            var result = {pass:false,message:''};
-            if (actualPerson.familyName > exceptPerson.lastname){
+          compare: function(actualPerson: any, exceptPerson: any) {
+            // console.log("actualPerson:", checkIfObjectPerson(actualPerson), ", exceptPerson:", checkIfObjectPerson(exceptPerson));
+            var result = {pass:false, message:''};
+            if(checkIfObjectPerson(actualPerson) && checkIfObjectPerson(exceptPerson)){
+              if(actualPerson.lastname == exceptPerson.lastname){
                 result.pass = true;
-                result.message = "test is passed"
-            } else {
+                result.message = "Test Ook"
+              }else{
                 result.pass = false;
-                result.message = "test fails"
+                result.message = "Test faillls"
+              }
+            }else if(Array.isArray(actualPerson) && Array.isArray(exceptPerson)){
+              if(checkArray(actualPerson, exceptPerson)){
+                result.pass = true;
+                result.message = "Test Ook"
+              }else{
+                result.pass = false;
+                result.message = "Test faillls"
+              }
+            }else{
+                result.pass = false;
+                result.message = "test faillls"
             }
             return result;
           }

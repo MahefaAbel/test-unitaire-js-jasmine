@@ -37,8 +37,8 @@ describe("Person", () => {
         const expected = customSearchProvider();
         const customCriteria = new CustomCriteria('be', null, null, null, null, Sort.FIRSTNAME, Direction.ASC);
         const results = person.customSearch(customCriteria);
-        console.log("Person.spec>it:39, results:", results);
-        // assertArraySimilar(expected, results);
+        // console.log("Person.spec>it:39, results:", results);
+        assertArraySimilar(expected, results);
     });
 
 });

@@ -65,7 +65,7 @@ export class Person {
 
     public sortedList(sort, direction): Person[]{
         const results: Person[] = this.listAll(false);
-        console.log("Person::sortedList()>results: ", results);
+        // console.log("Person::sortedList()>results: ", results);
         this.arraySortByColumn(results, sort, direction);
         this.arrayPrepareData(results);
 
@@ -119,7 +119,7 @@ export class Person {
     public arraySearchForSubKeyValue(array: any, key: string, value: any, operator: string): Person[]{
         let results: Person[] = [];
     
-        console.log("Person::arraySearchForSubKeyValue, array:", array.hasOwnProperty(key), array, key);
+        // console.log("Person::arraySearchForSubKeyValue, array:", array.hasOwnProperty(key), array, key);
         if (array.hasOwnProperty(key)) {
             // if(array[key] !== undefined){
                 switch (operator){
