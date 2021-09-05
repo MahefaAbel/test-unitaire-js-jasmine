@@ -5,5 +5,6 @@ Test Unitaire Javascript/Typescript with jasmine
 **Typescript installation**
 
 **Webpack**
-- npm install --save-dev webpack webpack-cli webpack-dev-server
-- npm install --save-dev ts-loader
+
+    - npm install --save-dev webpack webpack-cli webpack-dev-server
+    - npm install --save-dev ts-loader
