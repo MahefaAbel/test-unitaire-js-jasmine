@@ -1,7 +1,8 @@
-import { Direction, Gender, Operator, Sort } from "./CustomCriteria";
+import { array_diff_key } from "../../libs/Array";
+import { CustomCriteria, Direction, Gender, Operator, Sort } from "./CustomCriteria";
 import { Person } from "./Person";
 
-const person: Person;
+let person: Person;
 const testData = 
 [
     {[Sort.FIRSTNAME] : 'Jean', [Sort.LASTNAME] : 'RAKOTO', [Sort.BIRTHDATE] : '1957-04-22', [Sort.GENDER] : Gender.MALE},
@@ -26,13 +27,37 @@ function setUp() : void
 // setUp();
 
 describe("Person", () => {
-    it("devrait creer de l'argent de 100 MGA", () => {
-        expect(person.listAll()).toEqual(testData);
+    
+    beforeEach(function(){
+        jasmine.addMatchers({
+          toEqualPersonValue: () => {
+            return {
+              compare: function(actualPerson: Person, exceptPerson: {[Sort.FIRSTNAME], [Sort.LASTNAME], [Sort.AGE], [Sort.BIRTHDATE], [Sort.GENDER]}) {
+                var result = {pass:false,message:''};
+                if (actualPerson.familyName > exceptPerson.lastname){
+                    result.pass = true;
+                    result.message = "test is passed"
+                } else {
+                    result.pass = false;
+                    result.message = "test fails"
+                }
+                return result;
+              }
+            }
+          }
+        })
     });
 
     it("devrait creer de l'argent de 100 MGA", () => {
+        // @ts-ignore
+        expect(person.listAll()).toEqualPersonValue(testData);
+    });
+
+    it("devrait creer de l'argent de 100 MGA", () => {
+        const age = 12;
         const results = person.listUnderAge(age);
-        expect(results).toEqual(expected);
+        // @ts-ignore
+        expect(results).toEqualPersonValue(expected);
     });
 
     function listUnderAgeProvider(){
@@ -66,8 +91,11 @@ describe("Person", () => {
     }
 
     it("devrait creer de l'argent de 100 MGA", () => {
-        results = this.person.sortedList(sort, direction);
-        this.assertArraySimilar(expected, results);
+        const direction = "";
+        const sort = "";
+        const results = person.sortedList(sort, direction);
+        // @ts-ignore
+        expect(results).toEqualPersonValue(expected);
     });
 
     function sortedListByProvider(){
@@ -188,9 +216,10 @@ describe("Person", () => {
     }
 
     it("devrait creer de l'argent de 100 MGA", () => {
-        customCriteria = new CustomCriteria(firstname, lastname, gender, age, ageOperator, sort, direction);
-        results = this.person.customSearch(customCriteria);
-        this.assertArraySimilar(expected, results);
+        const expected = customSearchProvider();
+        const customCriteria = new CustomCriteria('be', null, null, null, null, Sort.FIRSTNAME, Direction.ASC);
+        const results = person.customSearch(customCriteria);
+        assertArraySimilar(expected, results);
     });
 
     function customSearchProvider(){
@@ -227,7 +256,7 @@ describe("Person", () => {
 
     function assertArraySimilar(expected: Array<any>,  array: Array<any>)
     {
-        this.assertTrue(count(array_diff_key(array, expected)) === 0);
+        this.assertTrue(array_diff_key(array, expected).length === 0);
 
         expected.forEach( (value, key) => {
             if (Array.isArray(value)) {
