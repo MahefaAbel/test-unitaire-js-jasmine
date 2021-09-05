@@ -10,12 +10,12 @@ export class Person {
     public familyName: string;
     public gender: string;
     public age: number;
-    public dateOfBirth: number;
+    public dateOfBirth: string;
 
     public constructor(
         firstname: string = null, 
         familyName: string = null, 
-        dateOfBirth: number = null, 
+        dateOfBirth: string = null, 
         gender: string = null
     ){
         this.firstname = firstname;
@@ -25,7 +25,7 @@ export class Person {
         this.age = null;
     }
 
-    public add(firstname: string, familyName: string, dateOfBirth: number, gender: string): void{
+    public add(firstname: string, familyName: string, dateOfBirth: string, gender: string): void{
         this.currentPerson = new Person(firstname, familyName, dateOfBirth, gender);
         this.persons.push(this.currentPerson);
     }
@@ -110,17 +110,18 @@ export class Person {
     }
     public arraySortByColumn(array, column, direction = Sort.ASC): void{
         const sortColumn = [];
-        array.foreach((key, row) => {
+        array.forEach((key, row) => {
             sortColumn[key] = row[column];
         });
         array_multisort(sortColumn, direction, array);
     }
 
-    public arraySearchForSubKeyValue(array: Person[], key: string, value: any, operator: string): Person[]{
+    public arraySearchForSubKeyValue(array: any, key: string, value: any, operator: string): Person[]{
         let results: Person[] = [];
     
-        if (Array.isArray(array)) {
-            if(array[key] !== "undefined"){
+        console.log("Person::arraySearchForSubKeyValue, array:", array.hasOwnProperty(key), array, key);
+        if (array.hasOwnProperty(key)) {
+            // if(array[key] !== undefined){
                 switch (operator){
                     case Operator.LOWER:
                         if(array[key] < value){
@@ -148,18 +149,23 @@ export class Person {
                         }
                         break;
                     case Operator.STARTWITH:
-                        console.log("arraySearchForSubKeyValue::Operator.STARTWITH, array:", array);
-                        // if(array[key].strtolower().indexOf(value.strtolower()) === 0){
-                        //     results.concat(array);
-                        // }
+                        try {
+                            if(array[key].toLowerCase().indexOf(value.toLowerCase()) === 0){
+                                results.concat(array);
+                            }
+                        } catch (error) {
+                            console.log("Catch::error", error,"arraySearchForSubKeyValue::Operator.STARTWITH, array:", array, key, array[key]);
+                        }
                         break;
                     default:
                         break;
                 }
-            }
+            // }
+        }
     
+        if (Array.isArray(array)) {
             array.forEach((subarray: Person) => {
-                // results = results.concat(this.arraySearchForSubKeyValue(subarray, key, value, operator));
+                results = results.concat(this.arraySearchForSubKeyValue(subarray, key, value, operator));
             });
         }
     

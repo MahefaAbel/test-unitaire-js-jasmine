@@ -2,15 +2,15 @@ import { array_diff_key } from "../../libs/Array";
 import { Sort } from "./CustomCriteria";
 import { Person } from "./Person";
 
-export function assertArraySimilar(expected: Array<any>,  array: Array<any>)
-{
-    this.assertTrue(array_diff_key(array, expected).length === 0);
+export const assertArraySimilar = (expected: Array<any>,  array: Array<any>) => {
+    const diffItemZero = array_diff_key(array, expected).length === 0;
+    expect(diffItemZero).toBeTrue();
 
     expected.forEach( (value, key) => {
         if (Array.isArray(value)) {
-            this.assertArraySimilar(value, array[key]);
+            assertArraySimilar(value, array[key]);
         } else {
-            this.assertContains(value, array);
+            expect(array).toContain(value);
         }
     });
 }

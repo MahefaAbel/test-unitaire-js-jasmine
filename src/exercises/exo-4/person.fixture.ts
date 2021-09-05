@@ -15,12 +15,13 @@ export const testData =
     {[Sort.FIRSTNAME] : 'Andry', [Sort.LASTNAME] : 'RAKOTONIRINA', [Sort.BIRTHDATE] : '1999-09-19', [Sort.GENDER] : Gender.MALE},
 ];
 
-export function setUp() : void
+export function setUp() : Person
 {
-    this.person = new Person();
-    this.testData.forEach(value => { 
-        this.person.add(value[Sort.FIRSTNAME], value[Sort.LASTNAME], value[Sort.BIRTHDATE], value[Sort.GENDER]);
+    const person = new Person();
+    testData.forEach( value => { 
+        person.add(value[Sort.FIRSTNAME], value[Sort.LASTNAME], value[Sort.BIRTHDATE], value[Sort.GENDER]);
     });
+    return person;
 }
 
 export function listUnderAgeProvider(){
